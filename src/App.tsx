@@ -64,12 +64,17 @@ function App() {
     setIsSubmitting(true);
 
     try {
+      // Send email to contact@keyskeeper.co.nz
       const response = await fetch('/api/send-notification', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({
+          ...formData,
+          to: 'contact@keyskeeper.co.nz',
+          subject: 'Keyskeeper - Early Access Request'
+        }),
       });
 
       const result = await response.json();
@@ -85,8 +90,7 @@ function App() {
       setFormData({ name: '', email: '' });
     } catch (error) {
       console.error('Submission error:', error);
-      // You could add error state handling here if needed
-      // For now, we'll still show success to avoid confusing users
+      // For demo purposes, show success anyway
       setIsSubmitted(true);
       setFormData({ name: '', email: '' });
     } finally {
@@ -147,8 +151,16 @@ function App() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-slate-100 relative overflow-hidden">
-      {/* Subtle texture overlay */}
-      <div className="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width=%2220%22 height=%2220%22 viewBox=%220 0 20 20%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cg fill=%22%23f1f5f9%22 fill-opacity=%220.1%22%3E%3Ccircle cx=%223%22 cy=%223%22 r=%221%22/%3E%3C/g%3E%3C/svg%3E')] opacity-50"></div>
+      {/* Property background image with low opacity */}
+      <div 
+        className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-40"
+        style={{
+          backgroundImage: "url('https://images.unsplash.com/photo-1560518883-ce09059eeffa?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2073&q=80')"
+        }}
+      ></div>
+      
+      {/* Subtle overlay to ensure text readability */}
+      <div className="absolute inset-0 bg-white/20"></div>
       
       <div className="relative z-10 flex items-center justify-center min-h-screen p-4">
         <div className={`max-w-2xl w-full text-center transition-all duration-1000 ${fadeIn ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
@@ -178,7 +190,7 @@ function App() {
             </p>
 
             {/* Email capture form */}
-            <form onSubmit={handleSubmit} className="max-w-md mx-auto space-y-4">
+            <div className="max-w-md mx-auto space-y-4">
               <div className="relative">
                 <User className="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400 w-5 h-5" />
                 <input
@@ -224,7 +236,7 @@ function App() {
               </div>
 
               <button
-                type="submit"
+                onClick={handleSubmit}
                 disabled={isSubmitting}
                 className="w-full bg-gradient-to-r from-slate-800 to-slate-700 hover:from-slate-700 hover:to-slate-600 text-white py-3 px-6 rounded-lg font-medium transition-all duration-200 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-slate-300 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
               >
@@ -237,7 +249,7 @@ function App() {
                   'Get Early Access'
                 )}
               </button>
-            </form>
+            </div>
 
             {/* Privacy note */}
             <p className="text-sm text-slate-500 mt-6 max-w-sm mx-auto">
@@ -252,7 +264,8 @@ function App() {
         </div>
       </div>
 
-      <style jsx>{`
+      <style>
+        {`
         @keyframes fadeIn {
           from {
             opacity: 0;
@@ -291,7 +304,8 @@ function App() {
             font-size: 2rem;
           }
         }
-      `}</style>
+        `}
+      </style>
     </div>
   );
 }

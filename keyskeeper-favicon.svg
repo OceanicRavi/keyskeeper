@@ -1,0 +1,14 @@
+<svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- House shape -->
+  <path d="M6 28V14L16 6L26 14V28H20V20H12V28H6Z" fill="#1e293b"/>
+  
+  <!-- Key integrated into design -->
+  <circle cx="16" cy="17" r="2" fill="#f59e0b"/>
+  <rect x="15" y="19" width="2" height="6" fill="#f59e0b"/>
+  <rect x="14" y="23" width="1" height="1" fill="#f59e0b"/>
+  <rect x="17" y="24" width="1" height="1" fill="#f59e0b"/>
+  
+  <!-- Window highlights -->
+  <rect x="13" y="21" width="2" height="2" fill="rgba(245, 158, 11, 0.3)"/>
+  <rect x="17" y="21" width="2" height="2" fill="rgba(245, 158, 11, 0.3)"/>
+</svg>
