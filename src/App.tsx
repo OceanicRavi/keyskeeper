@@ -64,33 +64,23 @@ function App() {
     setIsSubmitting(true);
 
     try {
-      // Send email to contact@keyskeeper.co.nz
-      const response = await fetch('/api/send-notification', {
+      const response = await fetch('/api/send-email', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({
-          ...formData,
-          to: 'contact@keyskeeper.co.nz',
-          subject: 'Keyskeeper - Early Access Request'
-        }),
+        body: JSON.stringify(formData),
       });
 
-      const result = await response.json();
-
       if (!response.ok) {
-        throw new Error(result.error || 'Failed to submit form');
+        throw new Error('Failed to send email');
       }
-      
-      console.log('Form submitted:', formData);
-      console.log('Server response:', result);
       
       setIsSubmitted(true);
       setFormData({ name: '', email: '' });
     } catch (error) {
       console.error('Submission error:', error);
-      // For demo purposes, show success anyway
+      // For demo purposes, still show success
       setIsSubmitted(true);
       setFormData({ name: '', email: '' });
     } finally {
@@ -107,21 +97,16 @@ function App() {
       xmlns="http://www.w3.org/2000/svg"
       className="mx-auto mb-6"
     >
-      {/* House silhouette */}
       <path 
         d="M15 70V35L40 15L65 35V70H50V50H30V70H15Z" 
         fill="#1e293b" 
         stroke="#f59e0b" 
         strokeWidth="2"
       />
-      
-      {/* Key integrated into house design */}
       <circle cx="40" cy="42" r="4" fill="#f59e0b" />
       <rect x="38" y="46" width="4" height="12" fill="#f59e0b" />
       <rect x="36" y="54" width="2" height="2" fill="#f59e0b" />
       <rect x="42" y="56" width="2" height="2" fill="#f59e0b" />
-      
-      {/* Window accents */}
       <rect x="32" y="52" width="4" height="4" fill="rgba(245, 158, 11, 0.3)" />
       <rect x="44" y="52" width="4" height="4" fill="rgba(245, 158, 11, 0.3)" />
     </svg>
@@ -151,7 +136,6 @@ function App() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-slate-100 relative overflow-hidden">
-      {/* Property background image with low opacity */}
       <div 
         className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-40"
         style={{
@@ -159,28 +143,23 @@ function App() {
         }}
       ></div>
       
-      {/* Subtle overlay to ensure text readability */}
       <div className="absolute inset-0 bg-white/20"></div>
       
       <div className="relative z-10 flex items-center justify-center min-h-screen p-4">
         <div className={`max-w-2xl w-full text-center transition-all duration-1000 ${fadeIn ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
           
-          {/* Logo */}
           <div className="mb-8">
             <KeyskeeperLogo />
           </div>
 
-          {/* Main heading */}
           <h1 className="text-5xl md:text-6xl font-bold text-slate-800 mb-4 tracking-tight">
             Keys<span className="text-amber-500">keeper</span>
           </h1>
           
-          {/* Tagline */}
           <p className="text-xl md:text-2xl text-slate-600 mb-8 font-light">
             We are your Keys Keeper – we take care of your property.
           </p>
 
-          {/* Coming Soon section */}
           <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl p-8 md:p-12 border border-white/20 mb-8">
             <h2 className="text-3xl md:text-4xl font-bold text-slate-800 mb-4">
               Coming Soon
@@ -189,7 +168,6 @@ function App() {
               Your trusted partner in property management – launching soon.
             </p>
 
-            {/* Email capture form */}
             <div className="max-w-md mx-auto space-y-4">
               <div className="relative">
                 <User className="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400 w-5 h-5" />
@@ -251,13 +229,11 @@ function App() {
               </button>
             </div>
 
-            {/* Privacy note */}
             <p className="text-sm text-slate-500 mt-6 max-w-sm mx-auto">
               We'll only use your email to update you about our launch. No spam, promise.
             </p>
           </div>
 
-          {/* Domain reference */}
           <div className="text-slate-500 text-sm">
             keyskeeper.co.nz
           </div>
@@ -282,27 +258,15 @@ function App() {
         }
 
         @media (max-width: 768px) {
-          .text-5xl {
-            font-size: 2.5rem;
-          }
-          .text-6xl {
-            font-size: 3rem;
-          }
+          .text-5xl { font-size: 2.5rem; }
+          .text-6xl { font-size: 3rem; }
         }
 
         @media (max-width: 480px) {
-          .text-5xl {
-            font-size: 2rem;
-          }
-          .text-6xl {
-            font-size: 2.25rem;
-          }
-          .text-3xl {
-            font-size: 1.75rem;
-          }
-          .text-4xl {
-            font-size: 2rem;
-          }
+          .text-5xl { font-size: 2rem; }
+          .text-6xl { font-size: 2.25rem; }
+          .text-3xl { font-size: 1.75rem; }
+          .text-4xl { font-size: 2rem; }
         }
         `}
       </style>
